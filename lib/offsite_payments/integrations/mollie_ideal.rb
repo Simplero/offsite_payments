@@ -7,9 +7,10 @@ module OffsitePayments #:nodoc:
       self.live_issuers = [
         ["ABN AMRO", "ideal_ABNANL2A"],
         ["ASN Bank", "ideal_ASNBNL21"],
-        ["Friesland Bank", "ideal_FRBKNL2L"],
+        ["Bunq", "ideal_BUNQNL2A"],
         ["ING", "ideal_INGBNL2A"],
         ["Knab", "ideal_KNABNL2H"],
+        ["Moneyou", "ideal_MOYONL21"],
         ["Rabobank", "ideal_RABONL2U"],
         ["RegioBank", "ideal_RBRBNL21"],
         ["SNS Bank", "ideal_SNSBNL2A"],
@@ -17,18 +18,12 @@ module OffsitePayments #:nodoc:
         ["van Lanschot", "ideal_FVLBNL22"]
       ]
 
-      mattr_accessor :test_issuers
-      self.test_issuers = [
-        ["TBM Bank", "ideal_TESTNL99"]
-      ]
-
       def self.redirect_param_label
         "Select your bank"
       end
 
       def self.redirect_param_options(options = {})
-        return test_issuers if options[:credential1].blank?
-        options[:credential1].start_with?('live_') ? live_issuers : test_issuers
+        live_issuers
       end
 
       def self.retrieve_issuers(token)
